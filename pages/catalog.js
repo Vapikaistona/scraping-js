@@ -29,7 +29,23 @@ async function getAllPages() {
         console.log(error);
     }  
 }
+async function getPageFavicon(pageInfo){
+        const browser = await puppeteer.launch();
+        const page = await browser.newPage();
+        await page.goto(pageInfo.url);
+        const info = await page.evaluate(() => {
+            let icons = [];
+            icons = [...document.querySelectorAll('link[rel="apple-touch-icon"]')].map(link => link.href);
+            if (icons.length === 0){
+                icons = [...document.querySelectorAll('link[rel="shortcut icon"]')].map(link => link.href);
+            }
+            return icons;
+        });
+        await browser.close();
+        return info;
+}
 
 module.exports = {
-    getAllPages
+    getAllPages,
+    getPageFavicon
 }
