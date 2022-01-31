@@ -3,11 +3,14 @@ const pages = require('./pages');
 const utils = require('./utils');
 const mongodb = require('./utils/database/mongodb');
 const kafka = require('./utils/kafka/kafka');
+const dbCollections = require('./utils/database/collections');
 (async () => {
     await mongodb.init();
-    const mechanicalkeyboards_keyboards = await keyboards.mechanicalkeyboardsKeyboards(3);
-    const keyboardsCollection = await mongodb.getCollection('keyboards');
-    await keyboardsCollection.insertMany([...mechanicalkeyboards_keyboards]);
+    const pagesInfo = pages.getAllPages();
+    await dbCollections.insertPages(pagesInfo);
+    // const mechanicalkeyboards_keyboards = await keyboards.mechanicalkeyboardsKeyboards(3);
+    // const keyboardsCollection = await mongodb.getCollection('keyboards');
+    // await keyboardsCollection.insertMany([...mechanicalkeyboards_keyboards]);
     // console.log(JSON.stringify(mechanicalkeyboards_keyboards));
     // utils.setPages();
     // const allPages = await pages.getAllPages()
