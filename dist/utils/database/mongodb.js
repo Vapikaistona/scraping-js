@@ -18,21 +18,20 @@ var mongo;
     let db = null;
     function init() {
         return __awaiter(this, void 0, void 0, function* () {
-            this.client = new mongodb_1.MongoClient(config_1.mongoConfig.url);
-            yield this.client.connect();
-            this.db = this.client.db(config_1.mongoConfig.dbName);
+            if (!client) {
+                client = new mongodb_1.MongoClient(config_1.mongoConfig.url);
+                yield client.connect();
+            }
+            if (!db) {
+                db = client.db(config_1.mongoConfig.dbName);
+            }
+            return db;
         });
     }
     mongo.init = init;
-    function getCollection(collection) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return this.db.collection(collection);
-        });
-    }
-    mongo.getCollection = getCollection;
     function close() {
         return __awaiter(this, void 0, void 0, function* () {
-            yield this.client.close();
+            yield client.close();
         });
     }
     mongo.close = close;
