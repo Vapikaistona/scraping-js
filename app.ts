@@ -1,6 +1,5 @@
 // import { pages } from './utils/PagesInfo';
 import { mongo } from './utils/database/mongodb';
-import { Collection } from 'mongodb';
 import { Pages } from './utils/database/collections/pages';
 import { Keyboards } from './utils/database/collections/keyboards';
 (async () => {
